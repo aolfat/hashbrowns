@@ -19,9 +19,11 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {this.hardCodeValues().map(v => (
-            <HashTagButton tag={v} />
-          ))}
+          <ButtonGroup>
+            {this.hardCodeValues().map(v => (
+              <HashTagButton tag={v} />
+            ))}
+          </ButtonGroup>
         </header>
       </div>
     );
