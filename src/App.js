@@ -1,8 +1,24 @@
 import React, { Component } from "react";
 import HashTagButton from "./components/hashtagbutton";
+import HashTagForm from "./components/hashtagform";
 import "./App.css";
 
 class App extends Component {
+  state = {
+    tags: "",
+    strTags: [],
+    tagsList: []
+  };
+
+  handleSubmit = (tags, e) => {
+    e.preventDefault();
+    let strTags = tags.split();
+    const tagsList = [...this.state.tagsList];
+    tagsList.push(strTags);
+
+    this.setState({ strTags, tagsList });
+  };
+
   hardCodeValues = () => {
     const tags = [
       "moodygrams",
@@ -18,11 +34,10 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          {this.hardCodeValues().map(v => (
-            <HashTagButton tag={v} />
-          ))}
-        </header>
+        <HashTagForm onSubmit={this.handleSubmit} tags={this.state.tags} />
+        {this.state.strTags.map((v, index) => (
+          <HashTagButton key={index} tag={v} />
+        ))}
       </div>
     );
   }
