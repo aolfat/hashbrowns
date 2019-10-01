@@ -10,13 +10,13 @@ class App extends Component {
     tagsList: []
   };
 
-  handleSubmit = (tags, e) => {
-    e.preventDefault();
-    let strTags = tags.split();
-    const tagsList = [...this.state.tagsList];
-    tagsList.push(strTags);
+  handleSubmit = (tags) => {
+    const strTags = tags.split(',') // split tags into array by comma
+                    .map(tag => tag.trim()) // trims white space
+                    .filter(tag => tag) // removes empty elements
+                    .concat(this.state.strTags); // combines existing tags
 
-    this.setState({ strTags, tagsList });
+    this.setState({ strTags });
   };
 
   hardCodeValues = () => {
