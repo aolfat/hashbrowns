@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 class HashTagForm extends Component {
   state = {
-    value: "Type in your hashtags here"
+    value: "",
   };
 
   handleChange = e => {
@@ -10,16 +10,21 @@ class HashTagForm extends Component {
     this.setState({ value: e.target.value });
   };
 
-  render() {
+  handleSubmit = e => {
+    e.preventDefault();
     const { onSubmit } = this.props;
+    onSubmit(this.state.value);
+    this.setState({ value: '' });
+  }
+
+  render() {
+    const { value } = this.state;
+
     return (
-      <form
-        onSubmit={() => onSubmit(this.state.value)}
-        onChange={this.handleChange}
-      >
+      <form onSubmit={this.handleSubmit}>
         <label>
           Tags:
-          <textarea />
+          <textarea onChange={this.handleChange} value={value} placeholder="Type in your hashtags here" />
         </label>
         <input type="submit" value="Submit" />
       </form>
