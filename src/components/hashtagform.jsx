@@ -6,7 +6,6 @@ class HashTagForm extends Component {
   };
 
   handleChange = e => {
-    e.preventDefault();
     this.setState({ value: e.target.value });
   };
 
