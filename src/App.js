@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Header } from "./components/layout/Header";
 import { TagsInput } from "./components/TagsInput";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
 class App extends Component {
   state = {
@@ -10,7 +10,8 @@ class App extends Component {
     strTags: [],
     tagsList: [],
     groupName: "",
-    groupTags: {}
+    groupTags: {},
+    groupTags2: []
   };
 
   handleChange = e => {
@@ -34,10 +35,11 @@ class App extends Component {
         ...this.state.groupTags,
         [this.state.groupName.trim()]: tagsList
       },
-      textarea: "", // resetting the text area
-      function() {
-        console.log(this.state.groupTags);
-      }
+      groupTags2: [
+        ...this.state.groupTags2,
+        { tagName: this.state.groupName.trim(), tagsList: tagsList }
+      ],
+      textarea: "" // resetting the text area,
     });
     e.target.reset(); // not sure if I need this
   };
@@ -57,21 +59,27 @@ class App extends Component {
             </Col>
           </Row>
         </Container>
-        {Object.keys(this.state.groupTags).map(name =>
-          this.buildGroupTag(name)
-        )}
+        <Container>
+          {Object.keys(this.state.groupTags).map(name =>
+            this.buildGroupTag(name)
+          )}
+        </Container>
       </div>
     );
   }
 
   buildGroupTag = name => {
     return (
-      <React.Fragment>
-        <label>{name}</label>
-        {this.state.groupTags[name].map(tag => (
-          <button key={name + tag}>{tag}</button>
-        ))}
-      </React.Fragment>
+      <Row className="justify-content-md-center">
+        <Card>
+          <Card.Header>{name}</Card.Header>
+          <Card.Body>
+            {this.state.groupTags[name].map(tag => (
+              <Button key={name + tag}>{tag}</Button>
+            ))}
+          </Card.Body>
+        </Card>
+      </Row>
     );
   };
 }
